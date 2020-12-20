@@ -42,7 +42,6 @@ public class AuthActivity extends AppCompatActivity {
 
         // при нажатии на кнопку переходит на след активити
         auth.setOnClickListener(v -> {
-            intent.putExtra("mail", eMailRegWindow);
             startActivity(intent);
         });
     }
