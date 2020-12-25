@@ -5,11 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,24 +16,19 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textView);
 
 
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://api.openweathermap.org/data/2.5/onecall?lat=51.7887729&lon=54.8021706&exclude=hourly,daily,minutely,hourly,alerts&appid=bea62f32f1568bbde18365f14b7d9f45";
+        InstantiateTheRequestQueue InstantiateTheRequestQueue = new InstantiateTheRequestQueue();
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
+        InstantiateTheRequestQueue.createTheRequestQueue(this, new requestQueueListener() {
+            @Override
+            public void onError(String response) {
+                transferTemperature(response);
+            }
 
-                    transferTemperature(response);
-
-                }, error -> textView.setText("That didn't work!")
-        );
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
-
-        textView.setText("лох");
+            @Override
+            public void onSuccess(String response) {
+                transferTemperature(response);
+            }
+        });
 
     }
 
