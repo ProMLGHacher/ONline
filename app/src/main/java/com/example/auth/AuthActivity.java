@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,12 +28,13 @@ public class AuthActivity extends AppCompatActivity {
         Button auth = findViewById(R.id.auth);
         TextView eMailAuth = findViewById(R.id.eMailAuth);
         TextView passwordAuth = findViewById(R.id.passwordAuth);
+        TextView feed = findViewById(R.id.feed);
 
-        // получаем наддые с прошлого активити
+        // получаем дфнные с прошлого активити
         String eMailRegWindow = getIntent().getStringExtra("mail");
         String passwordGegWindow = getIntent().getStringExtra("password");
 
-        // ствим вщятые данные с прошлого активити в поля для ввода логина и пароля
+        // ствим взятые данные с прошлого активити в поля для ввода логина и пароля
         eMailAuth.setText(eMailRegWindow);
         passwordAuth.setText(passwordGegWindow);
 
@@ -42,7 +44,14 @@ public class AuthActivity extends AppCompatActivity {
 
         // при нажатии на кнопку переходит на след активити
         auth.setOnClickListener(v -> {
-            startActivity(intent);
+            if (eMailAuth.getText().toString().equals(eMailRegWindow) & passwordAuth.getText().toString().equals(passwordGegWindow)) {
+                feed.setText("Верно");
+                feed.setTextColor(Color.GREEN);
+                startActivity(intent);
+            } else {
+                feed.setText("Вы ошиблись в логине или пароле");
+                feed.setTextColor(Color.RED);
+            }
         });
     }
 }
